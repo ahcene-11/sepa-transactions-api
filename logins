@@ -1,1 +1,5 @@
+vm : login = spring , mdp = akuma11*
 ip : 10.130.162.157
+giluser	mdp: giluser
+
+ens33 10.130.162.157
