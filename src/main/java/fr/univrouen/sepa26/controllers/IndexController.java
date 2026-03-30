@@ -9,4 +9,10 @@ public class IndexController {
 	public String index() {
 		return "Hello sepa26 automatisé!";
 	}
+
+	@GetMapping("/simulate-error")
+	public String simulateError() {
+		// On force le programme à planter en déclenchant une exception non gérée
+		throw new RuntimeException("Ceci est un test d'erreur 500 volontaire !");
+	}
 }
