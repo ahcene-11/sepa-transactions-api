@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 	@GetMapping("/")
 	public String index() {
-		return "Hello sepa26 !";
+		return "Hello sepa26 automatisé!";
 	}
 }
