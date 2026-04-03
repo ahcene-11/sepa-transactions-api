@@ -1,29 +1,32 @@
 package fr.univrouen.sepa26.model;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
 public class TestSepa26 {
 
-    public String loadFileXML() {
+    public Document testUnmarshalling() {
         try {
+            // 1. Charger le fichier XML depuis les ressources
             Resource resource = new DefaultResourceLoader().getResource("classpath:xml/testsepa.xml");
-            
-            // Ouvrir le flux de lecture (InputStream)
             InputStream is = resource.getInputStream();
-            
-            // 3. Lire tout le contenu et le transformer en String
-            Scanner scanner = new Scanner(is, StandardCharsets.UTF_8.name());
-            String xmlContent = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-            scanner.close();
-            
-            return xmlContent;
-            
+
+            // 2. Préparer JAXB pour lire en commençant par la racine (Document)
+            JAXBContext context = JAXBContext.newInstance(Document.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+
+            // 3. Transformer le XML en objets Java (Désérialisation)
+            Document document = (Document) unmarshaller.unmarshal(is);
+
+            return document;
+
         } catch (Exception e) {
-            return "<error>Erreur de lecture du fichier : " + e.getMessage() + "</error>";
+            System.out.println("Erreur de parsing : " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 }

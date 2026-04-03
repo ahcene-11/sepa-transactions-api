@@ -16,10 +16,11 @@ public class PostController {
 		return ("<result><response>Message reçu : </response>"+ flux + "</result>");
 	}
 	
-	@PostMapping(value = "/testload", produces = MediaType.APPLICATION_XML_VALUE)
-	@ResponseBody
-	public String testLoad() {
-		TestSepa26 sepa = new TestSepa26();
-	return sepa.loadFileXML();
-	}
+//	@PostMapping(value = "/testload", produces = MediaType.APPLICATION_XML_VALUE)
+//	@ResponseBody
+//	public String testLoad() {
+//		TestSepa26 sepa = new TestSepa26();
+//	return sepa.loadFileXML();
+//	}
+
 }

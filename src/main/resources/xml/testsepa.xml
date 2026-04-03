@@ -1,5 +1,168 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<DrctDbtTxInf>
-<PmtId>REF OPE A123B</PmtId>
-<InstdAmt Ccy="EUR">1100.07</InstdAmt>
-</DrctDbtTxInf>
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document xmlns="http://univ.fr/sepa">
+    <CstmrDrctDbtInitn>
+        <GrpHdr>
+            <MsgId>MSGID - 123456</MsgId>
+            <CreDtTm>2009-09-04T14:25:00</CreDtTm>
+            <NbOfTxs>3</NbOfTxs>
+            <CtrlSum>6530.15</CtrlSum>
+            <InitgPty>
+                <Nm>Societe XX</Nm>
+            </InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>REF Remise 123</PmtInfId>
+            <NbOfTxs>2</NbOfTxs>
+            <CtrlSum>3250.15</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+                <LclInstrm>
+                    <Cd>CORE</Cd>
+                </LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2009-09-10</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Societe XX</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id>
+                    <IBAN>FR7610041010050500013M02606</IBAN>
+                </Id>
+            </CdtrAcct>
+            <CdtrAgt>
+                <FinInstnId>
+                    <BIC>BANKFRPP</BIC>
+                </FinInstnId>
+            </CdtrAgt>
+            <CdtrSchmeId>
+                <Id>
+                    <PrvtId>
+                        <Othr>
+                            <Id>FR00ZZZ123456</Id>
+                            <SchmeNm>
+                                <Prtry>SEPA</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </PrvtId>
+                </Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId> REF OPE AAAA</PmtId>
+                <InstdAmt Ccy="EUR">1100.07</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf>
+                        <MndtId>MANDAT NO 55555</MndtId>
+                        <DtOfSgntr>2009-09-01</DtOfSgntr>
+                    </MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt>
+                    <FinInstnId>
+                        <Othr>
+                            <Id>NOTPROVIDED</Id>
+                        </Othr>
+                    </FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>Mr Debiteur N1</Nm>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id>
+                        <IBAN>FR763004136210001234567811</IBAN>
+                    </Id>
+                </DbtrAcct>
+                <RmtInf>Facture N1</RmtInf>
+            </DrctDbtTxInf>
+            <DrctDbtTxInf>
+                <PmtId>REF OPE BBBB</PmtId>
+                <InstdAmt Ccy="EUR">2150.08</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf>
+                        <MndtId>MANDAT NO 666666</MndtId>
+                        <DtOfSgntr>1989-07-03</DtOfSgntr>
+                    </MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt>
+                    <FinInstnId>
+                        <BIC>BANKGBUL</BIC>
+                    </FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>Mr Debiteur N2</Nm>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id>
+                        <IBAN>GB29NWBK60161331926819</IBAN>
+                    </Id>
+                </DbtrAcct>
+                <RmtInf>Facture reference ISO 654321</RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+        <PmtInf>
+            <PmtInfId>REF Remise 456</PmtInfId>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>3280</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+                <LclInstrm>
+                    <Cd>CORE</Cd>
+                </LclInstrm>
+                <SeqTp>RCUR</SeqTp>
+            </PmtTpInf>
+            <ReqdColltnDt>2009-09-15</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Societe XX</Nm>
+            </Cdtr>
+            <CdtrAcct>
+                <Id>
+                    <IBAN>FR7610041010050500013M02606</IBAN>
+                </Id>
+            </CdtrAcct>
+            <CdtrAgt>
+                <FinInstnId>
+                    <BIC>BANKFRPP</BIC>
+                </FinInstnId>
+            </CdtrAgt>
+            <CdtrSchmeId>
+                <Id>
+                    <PrvtId>
+                        <Othr>
+                            <Id>FR00ZZZ123456</Id>
+                            <SchmeNm>
+                                <Prtry>SEPA</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </PrvtId>
+                </Id>
+            </CdtrSchmeId>
+            <DrctDbtTxInf>
+                <PmtId>REF OPE CCCC</PmtId>
+                <InstdAmt Ccy="EUR">3280.00</InstdAmt>
+                <DrctDbtTx>
+                    <MndtRltdInf>
+                        <MndtId>MANDAT NO 77777</MndtId>
+                        <DtOfSgntr>1991-05-07</DtOfSgntr>
+                    </MndtRltdInf>
+                </DrctDbtTx>
+                <DbtrAgt>
+                    <FinInstnId>
+                        <BIC>BANQBEBB</BIC>
+                    </FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>Mr Debiteur N3</Nm>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id>
+                        <IBAN>BE30001216371411</IBAN>
+                    </Id>
+                </DbtrAcct>
+                <RmtInf>Facture N3</RmtInf>
+            </DrctDbtTxInf>
+        </PmtInf>
+    </CstmrDrctDbtInitn>
+</Document>
