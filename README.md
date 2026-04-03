@@ -1,206 +1,51 @@
-# 💳 SEPA26 REST API
+# 💳 SEPA26 
 
 ## 📌 Description
 
-Ce projet consiste à concevoir et déployer un service RESTful permettant de gérer des flux **SEPA (format sepa26)** en XML.
+SEPA26 est une application permettant de gérer des transactions SEPA au format XML via une interface REST.
 
-L’objectif est de proposer une API complète capable de :
-
-* recevoir,
-* stocker,
-* consulter,
-* transformer
-  des transactions SEPA conformes à un schéma **XSD**.
-
-Le projet s’inscrit dans le cadre du module *Langage Web 2 - XML (M1 GIL)*.
+Elle repose sur une **implémentation partielle de la norme ISO 20022**, avec validation des flux via XSD et transformation en HTML grâce à XSLT.
 
 ---
 
-## 🚀 Fonctionnalités principales
+##   Fonctionnalités
 
-### 🔹 Accueil
-
-* `GET /`
-* Affiche une page HTML contenant :
-
-  * Nom du projet
-  * Version
-  * Auteurs
-  * Logo de l’université
+*  Page d’accueil avec informations sur l’application
+*  Page d’aide listant les endpoints disponibles
+*  Consultation des transactions (liste et détail) en XML ou HTML
+*  Ajout de transactions via flux XML validé (XSD)
+*  Suppression de transactions
+*  Recherche de transactions selon des critères (date, montant)
 
 ---
 
-### 🔹 Aide
+##  Technologies
 
-* `GET /help`
-* Liste toutes les routes disponibles avec :
-
-  * URL
-  * Méthode HTTP
-  * Description des opérations
-
----
-
-### 🔹 Transactions (SEPA)
-
-#### 📄 Liste des transactions
-
-* `GET /sepa26/resume/xml` → Retour XML
-* `GET /sepa26/resume/html` → Retour HTML
-
-Affiche les **10 dernières transactions** avec :
-
-* ID
-* Date (`<CreDtTm>`)
-* Identifiant (`<PmtId>`)
-* Montant (`<CtrlSum>`)
+* **Java / Spring Boot** : développement du service REST
+* **XML / XSD** : structuration et validation des flux SEPA
+* **XSLT** : transformation des flux XML en pages HTML
+* **PostgreSQL** : stockage des transactions
+* **Jenkins** : intégration continue et déploiement automatisé
+* **Machine virtuelle (VM)** : hébergement et exécution de l’application
 
 ---
 
-#### 🔍 Détail d’une transaction
+##  Déploiement
 
-* `GET /sepa26/xml/{id}` → XML
-* `GET /sepa26/html/{id}` → HTML
+L’application est déployée sur une **machine virtuelle**, avec :
 
-Retourne le contenu complet d’une transaction.
-
-✔️ Gestion des erreurs :
-
-* ID invalide → réponse avec `status: ERROR`
+* un service REST accessible à distance
+* une base de données PostgreSQL connectée
+* un pipeline Jenkins permettant l’automatisation du build et du déploiement
 
 ---
 
-#### ➕ Ajout d’une transaction
-
-* `POST /sepa26/insert`
-* Reçoit un flux XML conforme au schéma XSD
-
-✔️ Vérifications :
-
-* Validation XSD
-* Unicité de la transaction
-
-✔️ Réponses :
-
-* Succès → `status: INSERTED` + `id`
-* Échec → `status: ERROR`
-
----
-
-#### ❌ Suppression d’une transaction
-
-* `DELETE /sepa26/delete/{id}`
-
-✔️ Réponses :
-
-* Succès → `status: DELETED`
-* Échec → `status: ERROR`
-
----
-
-## 📊 Bonus (optionnels)
-
-### 🔎 Recherche
-
-* `GET /sepa26/search?date=...&sum=...`
-
-Permet de filtrer les transactions selon :
-
-* Date (`>=`)
-* Montant (`>=`)
-
----
-
-### ⚠️ Gestion avancée des erreurs
-
-* Ajout d’un champ `description` dans les réponses XML
-
----
-
-### 🏗️ Usine logicielle
-
-* Intégration CI/CD (Jenkins)
-* Déploiement automatique
-* Tests avant mise en production
-
----
-
-## 🛠️ Technologies utilisées
-
-* Java / Spring Boot
-* XML / XSD (validation)
-* XSLT (transformation XML → HTML)
-* XQuery (recherche)
-* REST API
-* Postman (tests)
-* Git / Jenkins (CI/CD)
-
----
-
-## 📦 Architecture du projet
-
-Le projet repose sur :
-
-* Contrôleurs REST (Spring)
-* Validation XML via XSD
-* Transformation via XSLT
-* Stockage des transactions (base de données ou fichiers XML)
-
----
-
-## 🧪 Tests
-
-Les endpoints sont testés via **Postman** avec une collection dédiée :
-
-* Requêtes complètes (GET, POST, DELETE)
-* Variables d’environnement pour le serveur
-
----
-
-## 📡 Déploiement
-
-L’application est déployée sur une machine virtuelle avec :
-
-* Serveur actif
-* Base de données connectée
-* Accès distant aux endpoints
-
----
-
-## 📁 Outil de transfert
-
-Une application client permet :
-
-* de sélectionner un fichier XML
-* de l’envoyer au service REST
-* d’afficher la réponse du serveur
-
----
-
-## ⚠️ Contraintes
-
-* Tous les flux doivent être valides XML
-* Validation obligatoire via XSD
-* Aucune insertion si erreur
-* Formats de sortie :
-
-  * XML (API)
-  * HTML/XHTML (affichage)
-
----
-
-## 👨‍💻 Auteurs
+##  Auteur
 
 * Ahcène AMOUCHAS
 
 ---
 
-## 📅 Deadline
+##  Licence
 
-📌 22 mai 2026 - 23h00
-
----
-
-## 📄 Licence
-
-Projet académique – usage pédagogique
+Projet académique
