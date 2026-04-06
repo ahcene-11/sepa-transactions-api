@@ -1,13 +1,22 @@
 package fr.univrouen.sepa26.model;
 
+import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlTransient;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class PaymentInformation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlTransient
+    private Long id_db;
 
     @XmlElement(name = "PmtInfId")
     private String pmtInfId;
@@ -19,25 +28,45 @@ public class PaymentInformation {
     private String ctrlSum;
 
     @XmlElement(name = "PmtTpInf")
+    @Embedded
     private PaymentTypeInformation pmtTpInf;
 
     @XmlElement(name = "ReqdColltnDt")
     private String reqdColltnDt;
 
     @XmlElement(name = "Cdtr")
+    @Embedded
     private Creditor creditor;
 
     @XmlElement(name = "CdtrAcct")
+    @Embedded
     private CreditorAccount creditorAccount;
 
     @XmlElement(name = "CdtrAgt")
+    @Embedded
     private CreditorAgent creditorAgent;
 
     @XmlElement(name = "CdtrSchmeId")
+    @Embedded
     private CreditorSchemeId creditorSchemeId;
+
+    // La clé étrangère vers le Header
+    @ManyToOne
+    @JoinColumn(name = "group_header_id")
+    @XmlTransient // On cache ça du XML pour ne pas perturber JAXB
+    private GroupHeader groupHeader;
+
+    public GroupHeader getGroupHeader() {
+        return groupHeader;
+    }
+
+    public void setGroupHeader(GroupHeader groupHeader) {
+        this.groupHeader = groupHeader;
+    }
 
     // La liste des transactions (Le niveau 3 !)
     @XmlElement(name = "DrctDbtTxInf")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentInformation")
     private List<DirectDebitTransaction> transactions;
 
     // Constructeur vide obligatoire pour JAXB
@@ -101,6 +130,7 @@ public class PaymentInformation {
 
     // Type de paiement <PmtTpInf>
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class PaymentTypeInformation {
         @XmlElement(name = "SvcLvl")
         private ServiceLevel svcLvl;
@@ -123,8 +153,10 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class ServiceLevel {
         @XmlElement(name = "Cd")
+        @Column(name = "svc_lvl_code")
         private String code;
 
         public String getCode() {
@@ -133,8 +165,10 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class LocalInstrument {
         @XmlElement(name = "Cd")
+        @Column(name = "lcl_instrm_code")
         private String code;
 
         public String getCode() {
@@ -144,6 +178,7 @@ public class PaymentInformation {
 
     // Créancier <Cdtr>
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class Creditor {
         @XmlElement(name = "Nm")
         private String name;
@@ -155,6 +190,7 @@ public class PaymentInformation {
 
     // Compte Créancier <CdtrAcct>
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class CreditorAccount {
         @XmlElement(name = "Id")
         private AccountId id;
@@ -165,6 +201,7 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class AccountId {
         @XmlElement(name = "IBAN")
         private String iban;
@@ -176,6 +213,7 @@ public class PaymentInformation {
 
     // Banque Créancier <CdtrAgt>
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class CreditorAgent {
         @XmlElement(name = "FinInstnId")
         private FinancialInstitutionId finInstnId;
@@ -186,6 +224,7 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class FinancialInstitutionId {
         @XmlElement(name = "BIC")
         private String bic;
@@ -197,6 +236,7 @@ public class PaymentInformation {
 
     // Identifiant SEPA du créancier <CdtrSchmeId>
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class CreditorSchemeId {
         @XmlElement(name = "Id")
         private SchemeId id;
@@ -207,6 +247,7 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class SchemeId {
         @XmlElement(name = "PrvtId")
         private PrivateId prvtId;
@@ -217,6 +258,7 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class PrivateId {
         @XmlElement(name = "Othr")
         private OtherId othr;
@@ -227,6 +269,7 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class OtherId {
         @XmlElement(name = "Id")
         private String id;
@@ -243,6 +286,7 @@ public class PaymentInformation {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class SchemeName {
         @XmlElement(name = "Prtry")
         private String prtry;

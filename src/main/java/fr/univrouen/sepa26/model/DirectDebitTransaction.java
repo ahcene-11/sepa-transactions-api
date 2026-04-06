@@ -1,32 +1,53 @@
 package fr.univrouen.sepa26.model;
 
+import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class DirectDebitTransaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlTransient
+    private Long id_db;
+
+    // 3. LA CLÉ ÉTRANGÈRE : Le lien de retour vers le lot parent
+    @ManyToOne
+    @JoinColumn(name = "payment_information_id")
+    @XmlTransient // On cache ça du XML/JSON pour éviter une boucle infinie !
+    private PaymentInformation paymentInformation;
 
     @XmlElement(name = "PmtId")
     private String pmtId;
 
     @XmlElement(name = "InstdAmt")
+    @Embedded
     private Amount instdAmt;
 
     @XmlElement(name = "DrctDbtTx")
+    @Embedded
     private TransactionDetails drctDbtTx;
 
     @XmlElement(name = "DbtrAgt")
+    @Embedded
     private DebtorAgent dbtrAgt;
 
     @XmlElement(name = "Dbtr")
+    @Embedded
     private Debtor dbtr;
 
     @XmlElement(name = "DbtrAcct")
+    @Embedded
     private DebtorAccount dbtrAcct;
 
     @XmlElement(name = "RmtInf")
+    @ElementCollection
+    @CollectionTable(name = "remittance_info", joinColumns = @JoinColumn(name = "transaction_id"))
+    @Column(name = "info_text")
     private List<String> rmtInf;
 
     public DirectDebitTransaction() {
@@ -60,11 +81,22 @@ public class DirectDebitTransaction {
     public List<String> getRmtInf() {
         return rmtInf;
     }
+
+    // Le Getter
+    public PaymentInformation getPaymentInformation() {
+        return paymentInformation;
+    }
+
+    // Le Setter
+    public void setPaymentInformation(PaymentInformation paymentInformation) {
+        this.paymentInformation = paymentInformation;
+    }
 // ---CLASSES INTERNES POUR LES BALISES IMBRIQUÉES ---
 
 
     // Montant avec son attribut Ccy (Devise)
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class Amount {
         @XmlAttribute(name = "Ccy")
         private String currency;
@@ -83,6 +115,7 @@ public class DirectDebitTransaction {
 
     // Détails de la transaction et Mandat
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class TransactionDetails {
         @XmlElement(name = "MndtRltdInf")
         private MandateRelatedInfo mndtRltdInf;
@@ -93,6 +126,7 @@ public class DirectDebitTransaction {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class MandateRelatedInfo {
         @XmlElement(name = "MndtId")
         private String mndtId;
@@ -110,6 +144,7 @@ public class DirectDebitTransaction {
 
     // Banque du débiteur
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class DebtorAgent {
         @XmlElement(name = "FinInstnId")
         private FinancialInstitutionId finInstnId;
@@ -120,6 +155,7 @@ public class DirectDebitTransaction {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     @XmlType(name = "TxFinancialInstitutionId")
     public static class FinancialInstitutionId {
         @XmlElement(name = "BIC")
@@ -138,6 +174,7 @@ public class DirectDebitTransaction {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     @XmlType(name = "TxOtherId")
     public static class OtherId {
         @XmlElement(name = "Id")
@@ -150,6 +187,7 @@ public class DirectDebitTransaction {
 
     // Débiteur (Nom)
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class Debtor {
         @XmlElement(name = "Nm")
         private String name;
@@ -161,6 +199,7 @@ public class DirectDebitTransaction {
 
     // Compte du débiteur (IBAN)
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     public static class DebtorAccount {
         @XmlElement(name = "Id")
         private AccountId id;
@@ -171,6 +210,7 @@ public class DirectDebitTransaction {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable
     @XmlType(name = "TxAccountId")
     public static class AccountId {
         @XmlElement(name = "IBAN")

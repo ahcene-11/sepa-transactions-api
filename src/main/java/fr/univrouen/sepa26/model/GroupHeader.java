@@ -1,11 +1,22 @@
 package fr.univrouen.sepa26.model;
 
+import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlTransient;
+
+import java.util.List;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class GroupHeader {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlTransient // Dit à JAXB : "Ignore ce champ quand tu lis le XML, c'est juste pour la BDD"
+    private Long id_db;
 
     @XmlElement(name = "MsgId")
     private String msgId;
@@ -20,7 +31,21 @@ public class GroupHeader {
     private String ctrlSum;
 
     @XmlElement(name = "InitgPty")
+    @Embedded // AJOUT JPA : "Intègre les champs de InitiatingParty comme des colonnes de cette table"
     private InitiatingParty initgPty;
+
+    // La relation inverse
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupHeader")
+    @XmlTransient // Très important : dans le XML, les lots ne sont pas DANS le header, ils sont à côté !
+    private List<PaymentInformation> paymentInformationList;
+
+    public List<PaymentInformation> getPaymentInformationList() {
+        return paymentInformationList;
+    }
+
+    public void setPaymentInformationList(List<PaymentInformation> paymentInformationList) {
+        this.paymentInformationList = paymentInformationList;
+    }
 
     public GroupHeader() {}
 
@@ -41,6 +66,7 @@ public class GroupHeader {
 
     //classe interne pour InitgPty
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Embeddable // AJOUT JPA : "Je ne suis pas une table, je suis incrustable dans une autre table"
     public static class InitiatingParty {
         @XmlElement(name = "Nm")
         private String name;
