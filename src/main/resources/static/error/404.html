@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur 404 - Page Introuvable</title>
-    <link rel="stylesheet" href="/css/error.css?v=1">
+    <link rel="stylesheet" href="/css/error.css?v=7">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="header-title">SEPA26</div>
-            <div class="header-subtitle">Page Introuvable</div>
+            <div class="logo-section">
+                <div class="header-title">
+                    <img src="/images/sepa.png" alt="logo sepa">
+                </div>
+                <div class="header-subtitle">Page Introuvable</div>
+            </div>
         </div>
     </header>
 
     <main>
         <div class="error-container">
-            <img src="/images/bot.jpg" alt="Oups robot désolé" class="error-image">
+            <img src="/images/404er.jpg" alt="Oups robot désolé" class="error-image">
 
             <div class="error-code">404</div>
             <h1 class="error-title code-404">Page Introuvable</h1>
@@ -31,7 +35,10 @@
             </div>
 
             <div class="error-actions">
-                <a href="/" class="btn btn-primary">← Retour à l'accueil</a>
+                <a href="/" class="btn btn-primary btn-back">
+                    <span class="btn-icon" aria-hidden="true">❮</span>
+                    <span class="btn-label">Retour à l'accueil</span>
+                </a>
                 <a href="/help" class="btn btn-secondary"> Consulter l'aide</a>
             </div>
         </div>

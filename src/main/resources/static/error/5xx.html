@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur 500 - Problème Technique</title>
-    <link rel="stylesheet" href="/css/error.css?v=1">
+    <link rel="stylesheet" href="/css/error.css?v=7">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="header-title">SEPA26</div>
-            <div class="header-subtitle">Erreur Serveur</div>
+            <div class="logo-section">
+                <div class="header-title">
+                    <img src="/images/sepa.png" alt="logo sepa">
+                </div>
+                <div class="header-subtitle">Erreur Serveur</div>
+            </div>
         </div>
     </header>
 
     <main>
         <div class="error-container">
+            <img src="/images/500.png" alt="erreur serveur">
             <div class="error-code">500</div>
             <h1 class="error-title code-5xx">Erreur Serveur</h1>
 
@@ -30,7 +35,10 @@
             </div>
 
             <div class="error-actions">
-                <a href="/" class="btn btn-primary">← Retour à l'accueil</a>
+                <a href="/" class="btn btn-primary btn-back">
+                    <span class="btn-icon" aria-hidden="true">❮</span>
+                    <span class="btn-label">Retour à l'accueil</span>
+                </a>
                 <a href="/help" class="btn btn-secondary">Consulter l'aide</a>
             </div>
         </div>

@@ -28,7 +28,8 @@ a {
 
 header {
     background-color: #0f172a;
-    padding: 20px 0;
+    /* Header plus fin, mais le logo reste DANS le header */
+    padding: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-bottom: 3px solid #d4af37;
 }
@@ -45,31 +46,65 @@ header {
 .logo-section {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
+    width: 100%;
 }
 
-.logo-section img {
-    width: 160px;
-    height: auto;
-    border-radius: 8px;
-    background-color: white;
-    padding: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
+/* Header: logo à gauche, sous-titre à droite */
 .header-title {
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    min-height: 0;
+}
+
+/* Texte à droite du logo, centré verticalement */
+.header-subtitle {
+    margin-left: auto;
+    padding-bottom: 0;
+    text-align: right;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Logo du header (SEPA) : pas de fond blanc */
+.logo-section img {
+    /* Le logo SEPA reste dans le header.
+       On fixe une hauteur confortable qui ne force pas le header à grandir. */
+    height: 120px;
+    width: auto;
+    max-width: 320px;
+    object-fit: contain;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+/* Logo de la fac (URN) dans le body : fond blanc pour visibilité */
+.body-logo-urn {
+    width: 180px;
+    height: auto;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.18);
+    margin: 0 auto 18px auto;
+    display: block;
+}
+
+.header-title img {
+    display: block;
 }
 
 .header-subtitle {
     color: #d4af37;
-    font-size: 12px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-top: 5px;
+    margin-top: 0;
+    line-height: 1.1;
 }
 
 /* ===================
@@ -305,6 +340,33 @@ td:first-child {
     background-color: #c4991f;
     box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
     transform: translateY(-2px);
+}
+
+/* ===================
+   Bouton retour (chevron)
+   =================== */
+
+.btn-back {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-left: 44px; /* réserve de la place pour l'icône proche du bord */
+}
+
+.btn-back .btn-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.btn-back .btn-label {
+    display: inline-block;
 }
 
 /* ===================
