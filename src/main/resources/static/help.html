@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - SEPA26 | Plateforme de Gestion des Virements</title>
+    <link rel="stylesheet" href="/css/style.css?v=2">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title">SEPA26</div>
+            <div class="header-subtitle">Documentation API REST</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Documentation de l'API REST</h1>
+            <p class="subtitle">Référence complète des endpoints disponibles</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Méthode</th>
+                        <th>Description de l'opération</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/</td>
+                        <td><span class="method-get">GET</span></td>
+                        <td>Affiche la page d'accueil (HTML)</td>
+                    </tr>
+                    <tr>
+                        <td>/help</td>
+                        <td><span class="method-get">GET</span></td>
+                        <td>Affiche cette page de documentation (HTML)</td>
+                    </tr>
+                    <tr>
+                        <td>/sepa26/resume/xml</td>
+                        <td><span class="method-get">GET</span></td>
+                        <td>Affiche la liste simplifiée des 10 dernières transactions (XML)</td>
+                    </tr>
+                    <tr>
+                        <td>/sepa26/resume/html</td>
+                        <td><span class="method-get">GET</span></td>
+                        <td>Affiche la liste simplifiée des 10 dernières transactions (HTML)</td>
+                    </tr>
+                    <tr>
+                        <td>/sepa26/xml/{id}</td>
+                        <td><span class="method-get">GET</span></td>
+                        <td>Affiche le détail de la transaction {id} (XML)</td>
+                    </tr>
+                    <tr>
+                        <td>/sepa26/html/{id}</td>
+                        <td><span class="method-get">GET</span></td>
+                        <td>Affiche le détail de la transaction {id} (HTML)</td>
+                    </tr>
+                    <tr>
+                        <td>/sepa26/insert</td>
+                        <td><span class="method-post">POST</span></td>
+                        <td>Ajoute un flux SEPA complet via validation XSD (XML)</td>
+                    </tr>
+                    <tr>
+                        <td>/sepa26/delete/{id}</td>
+                        <td><span class="method-delete">DELETE</span></td>
+                        <td>Supprime une transaction par son identifiant (XML)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="back-link">
+                <a href="/" class="btn btn-secondary">← Retour à l'accueil</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Accueil</a>
+                <a href="/help">Aide</a>
+            </div>
+            <p>&copy; 2024-2026 SEPA26 - Tous droits réservés | Projet académique - Université de Rouen Normandie</p>
+        </div>
+    </footer>
+</body>
+</html>

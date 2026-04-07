@@ -1,0 +1,378 @@
+/* ===================
+   Styles globaux
+   =================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===================
+   Header
+   =================== */
+
+header {
+    background-color: #0f172a;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #d4af37;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-section img {
+    width: 160px;
+    height: auto;
+    border-radius: 8px;
+    background-color: white;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.header-title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.header-subtitle {
+    color: #d4af37;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+/* ===================
+   Main Content
+   =================== */
+
+main {
+    flex: 1;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 700;
+}
+
+h1 .highlight {
+    color: #d4af37;
+}
+
+.subtitle {
+    text-align: center;
+    color: #d4af37;
+    font-size: 16px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.description {
+    color: #667;
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+.version-badge {
+    display: inline-block;
+    background-color: #d4af37;
+    color: #0f172a;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 20px 0 30px 0;
+}
+
+.developer-info {
+    background-color: #f8f9fa;
+    border-left: 4px solid #d4af37;
+    padding: 15px 20px;
+    margin: 30px 0;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+}
+
+/* ===================
+   Page d'accueil - Index
+   =================== */
+
+.page-index .header-content {
+    justify-content: space-between;
+}
+
+.page-index main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-index .container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 60px 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.page-index h1 {
+    color: #0f172a;
+}
+
+/* ===================
+   Tableau
+   =================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+thead {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: white;
+}
+
+th {
+    padding: 18px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid #d4af37;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: #f8f9fa;
+    box-shadow: inset 3px 0 0 #d4af37;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+td {
+    padding: 16px 20px;
+    font-size: 14px;
+}
+
+td:first-child {
+    font-weight: 500;
+    color: #0f172a;
+}
+
+/* ===================
+   Badges de méthodes HTTP
+   =================== */
+
+.method-get {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.method-post {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.method-delete {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #ffebee;
+    color: #c62828;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+/* ===================
+   Boutons
+   =================== */
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.action-buttons a {
+    text-decoration: none;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 45px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #1e3a8a;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0f172a;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #d4af37;
+    color: #0f172a;
+}
+
+.btn-secondary:hover {
+    background-color: #c4991f;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ===================
+   Footer
+   =================== */
+
+footer {
+    background-color: #0f172a;
+    color: #999;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #d4af37;
+    font-size: 12px;
+    margin-top: 40px;
+}
+
+footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #d4af37;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.footer-links a:hover {
+    color: #e5c158;
+}
+
+/* ===================
+   Responsive Design
+   =================== */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 12px 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-index .container {
+        padding: 40px 20px;
+    }
+
+    .page-index h1 {
+        font-size: 28px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+

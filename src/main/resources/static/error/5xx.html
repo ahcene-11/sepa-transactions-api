@@ -2,50 +2,48 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur 500 - Problème Technique</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        h1 {
-            font-size: 60px;
-            color: #f0ad4e;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 20px;
-        }
-        .message {
-            margin: 20px auto;
-            max-width: 600px;
-            color: #666;
-            line-height: 1.5;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #0275d8;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .btn:hover {
-            background-color: #025aa5;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/error.css?v=1">
 </head>
 <body>
-<h1>500</h1>
-<h2>Oups ! Nos serveurs ont trébuché.</h2>
-<p class="message">
-    Une erreur inattendue s'est produite de notre côté. Pas d'inquiétude, ce n'est pas de votre faute !
-    Nos développeurs ont été prévenus et travaillent déjà à résoudre le problème.
-</p>
-<a href="/" class="btn">Retour à l'accueil</a>
+    <header>
+        <div class="header-content">
+            <div class="header-title">SEPA26</div>
+            <div class="header-subtitle">Erreur Serveur</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="error-container">
+            <div class="error-code">500</div>
+            <h1 class="error-title code-5xx">Erreur Serveur</h1>
+
+            <p class="error-message">
+                Oups ! Nos serveurs ont trébuché. Une erreur inattendue s'est produite de notre côté.
+                Pas d'inquiétude, ce n'est pas de votre faute !
+            </p>
+
+            <div class="error-details">
+                <strong>Statut :</strong> Une erreur interne du serveur s'est produite.<br>
+                <strong>Action :</strong> Nos développeurs ont été prévenus et travaillent déjà à résoudre le problème.
+            </div>
+
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary">← Retour à l'accueil</a>
+                <a href="/help" class="btn btn-secondary">Consulter l'aide</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Accueil</a>
+                <a href="/help">Aide</a>
+            </div>
+            <p>&copy; 2024-2026 SEPA26 - Tous droits réservés | Projet académique - Université de Rouen Normandie</p>
+        </div>
+    </footer>
 </body>
 </html>

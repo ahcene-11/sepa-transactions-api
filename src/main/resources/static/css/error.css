@@ -1,0 +1,231 @@
+/* ===================
+   Styles Erreurs
+   =================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================
+   Header Erreur
+   =================== */
+
+header {
+    background-color: #0f172a;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #d4af37;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.header-subtitle {
+    color: #d4af37;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+/* ===================
+   Main Erreur
+   =================== */
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.error-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 60px 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.error-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.error-code {
+    font-size: 80px;
+    font-weight: 700;
+    margin: 20px 0;
+    background: linear-gradient(135deg, #1e3a8a 0%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.error-title {
+    color: #0f172a;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.error-title.code-404 {
+    color: #c62828;
+}
+
+.error-title.code-5xx {
+    color: #f57c00;
+}
+
+.error-message {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+.error-details {
+    background-color: #f8f9fa;
+    border-left: 4px solid #d4af37;
+    padding: 15px 20px;
+    margin: 30px 0;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+}
+
+/* ===================
+   Boutons Erreur
+   =================== */
+
+.error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 45px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #1e3a8a;
+    color: white;
+    border: 2px solid #1e3a8a;
+}
+
+.btn-primary:hover {
+    background-color: #0f172a;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #d4af37;
+    color: #0f172a;
+    border: 2px solid #d4af37;
+}
+
+.btn-secondary:hover {
+    background-color: #c4991f;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ===================
+   Footer Erreur
+   =================== */
+
+footer {
+    background-color: #0f172a;
+    color: #999;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #d4af37;
+    font-size: 12px;
+}
+
+footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #d4af37;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.footer-links a:hover {
+    color: #e5c158;
+}
+
+/* ===================
+   Responsive
+   =================== */
+
+@media (max-width: 600px) {
+    .error-container {
+        padding: 40px 20px;
+    }
+
+    .error-code {
+        font-size: 60px;
+    }
+
+    .error-title {
+        font-size: 24px;
+    }
+
+    .error-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
