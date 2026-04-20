@@ -18,7 +18,7 @@ public class DirectDebitTransaction {
     // 3. LA CLÉ ÉTRANGÈRE : Le lien de retour vers le lot parent
     @ManyToOne
     @JoinColumn(name = "payment_information_id")
-    @XmlTransient // On cache ça du XML/JSON pour éviter une boucle infinie !
+    @XmlTransient // On cache ça du XML/JSON pour éviter une boucle infinie
     private PaymentInformation paymentInformation;
 
     @XmlElement(name = "PmtId")
@@ -54,6 +54,9 @@ public class DirectDebitTransaction {
         this.rmtInf = new ArrayList<>();
     }
 
+    public long getId_db(){
+        return id_db;
+    }
     public String getPmtId() {
         return pmtId;
     }
