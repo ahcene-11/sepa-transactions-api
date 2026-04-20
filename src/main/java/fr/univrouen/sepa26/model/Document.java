@@ -6,7 +6,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 // On déclare que c'est la racine, et on précise l'espace de nom défini dans le TP
-@XmlRootElement(name = "Document", namespace = "http://univ.fr/sepa")
+@XmlRootElement(name = "Document", namespace = "http://univ.fr/sepa26")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Document {
 

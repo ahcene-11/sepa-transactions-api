@@ -27,6 +27,10 @@ public class CustomerDirectDebitInitiation {
         this.grpHdr = grpHdr;
     }
 
+    public void setPmtInf(List<PaymentInformation> pmtInf) {
+        this.pmtInfList = pmtInf;
+    }
+
     public List<PaymentInformation> getPmtInfList() {
         return pmtInfList;
     }

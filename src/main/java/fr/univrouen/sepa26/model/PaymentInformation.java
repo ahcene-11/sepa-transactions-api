@@ -1,16 +1,14 @@
 package fr.univrouen.sepa26.model;
 
 import jakarta.persistence.*;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
+@XmlType(propOrder = {"pmtInfId", "nbOfTxs", "ctrlSum", "pmtTpInf", "reqdColltnDt", "creditor", "creditorAccount", "creditorAgent", "creditorSchemeId", "transactions"})
 public class PaymentInformation {
 
     @Id
@@ -84,6 +82,7 @@ public class PaymentInformation {
     public void addTransaction(DirectDebitTransaction tx) {
         this.transactions.add(tx);
     }
+
     //getter utile pour jackson car il ne lis pas les variables private
     public String getPmtInfId() {
         return pmtInfId;
@@ -124,6 +123,10 @@ public class PaymentInformation {
     public List<DirectDebitTransaction> getTransactions() {
         return transactions;
     }
+
+    public void setDrctDbtTxInf(List<DirectDebitTransaction> directDebitTransactions) {
+        this.transactions = directDebitTransactions;
+    }
 // ==========================================
     // CLASSES INTERNES POUR LES BALISES IMBRIQUÉES
     // ==========================================
@@ -131,6 +134,7 @@ public class PaymentInformation {
     // Type de paiement <PmtTpInf>
     @XmlAccessorType(XmlAccessType.FIELD)
     @Embeddable
+    @XmlType(propOrder = {"svcLvl", "lclInstrm", "seqTp"})
     public static class PaymentTypeInformation {
         @XmlElement(name = "SvcLvl")
         private ServiceLevel svcLvl;
@@ -270,6 +274,7 @@ public class PaymentInformation {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @Embeddable
+    @XmlType(propOrder = {"id", "schmeNm"})
     public static class OtherId {
         @XmlElement(name = "Id")
         private String id;

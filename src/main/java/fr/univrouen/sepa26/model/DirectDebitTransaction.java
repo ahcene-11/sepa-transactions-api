@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "DrctDbtTxInf")
 @Entity
+@XmlType(propOrder = {"pmtId", "instdAmt", "drctDbtTx", "dbtrAgt", "dbtr", "dbtrAcct", "rmtInf"})
 public class DirectDebitTransaction {
 
     @Id
@@ -130,6 +132,7 @@ public class DirectDebitTransaction {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @Embeddable
+    @XmlType(propOrder = {"mndtId", "dtOfSgntr"})
     public static class MandateRelatedInfo {
         @XmlElement(name = "MndtId")
         private String mndtId;
@@ -159,8 +162,7 @@ public class DirectDebitTransaction {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @Embeddable
-    @XmlType(name = "TxFinancialInstitutionId")
-    public static class FinancialInstitutionId {
+    @XmlType(name = "TxFinancialInstitutionId", propOrder = {"bic", "othr"})    public static class FinancialInstitutionId {
         @XmlElement(name = "BIC")
         private String bic;
 

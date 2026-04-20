@@ -1,16 +1,14 @@
 package fr.univrouen.sepa26.model;
 
 import jakarta.persistence.*;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.List;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
+@XmlType(propOrder = {"msgId", "creDtTm", "nbOfTxs", "ctrlSum", "initgPty"})
 public class GroupHeader {
 
     @Id
@@ -63,6 +61,22 @@ public class GroupHeader {
     public String getNbOfTxs() { return nbOfTxs; }
     public String getCtrlSum() { return ctrlSum; }
     public InitiatingParty getInitgPty() { return initgPty; }
+
+    //setters
+    public void setMsgId(String msg) {
+        this.msgId = msg;
+    }
+
+    public void setCreDtTm(String c) {
+        this.creDtTm=c;
+    }
+    public void setCtrlSum(String ctrlSum) {
+        this.ctrlSum = ctrlSum;
+    }
+
+    public void setNbOfTxs(String nbOfTxs) {
+        this.nbOfTxs = nbOfTxs;
+    }
 
     //classe interne pour InitgPty
     @XmlAccessorType(XmlAccessType.FIELD)
