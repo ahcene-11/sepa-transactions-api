@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "ece83010-d2e5-46a2-ac20-8b19b3384689",
+		"name": "sepa26_amouchas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "53276248",
+		"_collection_link": "https://amouchasahcene-6607932.postman.co/workspace/Ahc%C3%A8ne-Amo's-Workspace~50b7633d-bca9-48c6-8890-29e9dd9f1a2a/collection/53276248-ece83010-d2e5-46a2-ac20-8b19b3384689?action=share&source=collection_link&creator=53276248"
+	},
+	"item": [
+		{
+			"name": "Accueil HTML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Affiche la page d'accueil du projet avec les informations du développeur."
+			},
+			"response": []
+		},
+		{
+			"name": "Aide HTML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/help",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"help"
+					]
+				},
+				"description": "Affiche la liste des opérations gérées par le service REST."
+			},
+			"response": []
+		},
+		{
+			"name": "Liste Résumé XML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/sepa26/resume/xml",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"resume",
+						"xml"
+					]
+				},
+				"description": "Affiche la liste simplifiée des 10 dernières transactions au format XML."
+			},
+			"response": []
+		},
+		{
+			"name": "Liste Résumé HTML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/sepa26/resume/html",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"resume",
+						"html"
+					]
+				},
+				"description": "Affiche la liste des 10 dernières transactions dans un tableau HTML."
+			},
+			"response": []
+		},
+		{
+			"name": "Détail Transaction XML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/sepa26/xml/1",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"xml",
+						"1"
+					]
+				},
+				"description": "Retourne le flux XML complet et conforme au XSD pour une transaction précise."
+			},
+			"response": []
+		},
+		{
+			"name": "Détail Transaction HTML",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/sepa26/html/1",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"html",
+						"1"
+					]
+				},
+				"description": "Affiche le détail complet d'une transaction transformé en HTML via XSLT."
+			},
+			"response": []
+		},
+		{
+			"name": "Insérer un flux SEPA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Document xmlns=\"http://univ.fr/sepa26\">\n    <CstmrDrctDbtInitn>\n        <GrpHdr>\n            <MsgId>MSG-TEST-POST-001</MsgId>\n            <CreDtTm>2023-10-27T10:30:00</CreDtTm>\n            <NbOfTxs>2</NbOfTxs>\n            <CtrlSum>150.50</CtrlSum>\n            <InitgPty>\n                <Nm>Universite de Rouen</Nm>\n            </InitgPty>\n        </GrpHdr>\n        <PmtInf>\n            <PmtInfId>LOT-TEST-001</PmtInfId>\n            <NbOfTxs>2</NbOfTxs>\n            <CtrlSum>150.50</CtrlSum>\n            <ReqdColltnDt>2023-11-05</ReqdColltnDt>\n            \n            <DrctDbtTxInf>\n                <PmtId>TX-POST-001</PmtId>\n                <InstdAmt Ccy=\"EUR\">50.25</InstdAmt>\n                <DrctDbtTx>\n                    <MndtRltdInf>\n                        <MndtId>MANDAT-JOHNDOE</MndtId>\n                        <DtOfSgntr>2023-01-15</DtOfSgntr>\n                    </MndtRltdInf>\n                </DrctDbtTx>\n                <DbtrAgt>\n                    <FinInstnId>\n                        <BIC>SOGEFRPP</BIC>\n                    </FinInstnId>\n                </DbtrAgt>\n                <Dbtr>\n                    <Nm>John Doe</Nm>\n                </Dbtr>\n                <DbtrAcct>\n                    <Id>\n                        <IBAN>FR7630003035401234567890123</IBAN>\n                    </Id>\n                </DbtrAcct>\n                <RmtInf>Paiement Frais Inscription</RmtInf>\n            </DrctDbtTxInf>\n\n            <DrctDbtTxInf>\n                <PmtId>TX-POST-002</PmtId>\n                <InstdAmt Ccy=\"EUR\">100.25</InstdAmt>\n                <DrctDbtTx>\n                    <MndtRltdInf>\n                        <MndtId>MANDAT-JANESMITH</MndtId>\n                        <DtOfSgntr>2023-02-10</DtOfSgntr>\n                    </MndtRltdInf>\n                </DrctDbtTx>\n                <DbtrAgt>\n                    <FinInstnId>\n                        <BIC>BNPAFRPP</BIC>\n                    </FinInstnId>\n                </DbtrAgt>\n                <Dbtr>\n                    <Nm>Jane Smith</Nm>\n                </Dbtr>\n                <DbtrAcct>\n                    <Id>\n                        <IBAN>FR7612345678909876543210987</IBAN>\n                    </Id>\n                </DbtrAcct>\n                <RmtInf>Paiement Logement Etudiant</RmtInf>\n            </DrctDbtTxInf>\n        </PmtInf>\n    </CstmrDrctDbtInitn>\n</Document>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_server}}/sepa26/insert",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"insert"
+					]
+				},
+				"description": "Valide le flux via XSD, vérifie les doublons, et insère les données en base."
+			},
+			"response": []
+		},
+		{
+			"name": "Supprimer une transaction",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Document xmlns=\"http://univ.fr/sepa26\">\n    <CstmrDrctDbtInitn>\n        <GrpHdr>\n            <MsgId>MSG-TEST-POST-001</MsgId>\n            <CreDtTm>2023-10-27T10:30:00</CreDtTm>\n            <NbOfTxs>2</NbOfTxs>\n            <CtrlSum>150.50</CtrlSum>\n            <InitgPty>\n                <Nm>Universite de Rouen</Nm>\n            </InitgPty>\n        </GrpHdr>\n        <PmtInf>\n            <PmtInfId>LOT-TEST-001</PmtInfId>\n            <NbOfTxs>2</NbOfTxs>\n            <CtrlSum>150.50</CtrlSum>\n            <ReqdColltnDt>2023-11-05</ReqdColltnDt>\n            \n            <DrctDbtTxInf>\n                <PmtId>TX-POST-001</PmtId>\n                <InstdAmt Ccy=\"EUR\">50.25</InstdAmt>\n                <DrctDbtTx>\n                    <MndtRltdInf>\n                        <MndtId>MANDAT-JOHNDOE</MndtId>\n                        <DtOfSgntr>2023-01-15</DtOfSgntr>\n                    </MndtRltdInf>\n                </DrctDbtTx>\n                <DbtrAgt>\n                    <FinInstnId>\n                        <BIC>SOGEFRPP</BIC>\n                    </FinInstnId>\n                </DbtrAgt>\n                <Dbtr>\n                    <Nm>John Doe</Nm>\n                </Dbtr>\n                <DbtrAcct>\n                    <Id>\n                        <IBAN>FR7630003035401234567890123</IBAN>\n                    </Id>\n                </DbtrAcct>\n                <RmtInf>Paiement Frais Inscription</RmtInf>\n            </DrctDbtTxInf>\n\n            <DrctDbtTxInf>\n                <PmtId>TX-POST-002</PmtId>\n                <InstdAmt Ccy=\"EUR\">100.25</InstdAmt>\n                <DrctDbtTx>\n                    <MndtRltdInf>\n                        <MndtId>MANDAT-JANESMITH</MndtId>\n                        <DtOfSgntr>2023-02-10</DtOfSgntr>\n                    </MndtRltdInf>\n                </DrctDbtTx>\n                <DbtrAgt>\n                    <FinInstnId>\n                        <BIC>BNPAFRPP</BIC>\n                    </FinInstnId>\n                </DbtrAgt>\n                <Dbtr>\n                    <Nm>Jane Smith</Nm>\n                </Dbtr>\n                <DbtrAcct>\n                    <Id>\n                        <IBAN>FR7612345678909876543210987</IBAN>\n                    </Id>\n                </DbtrAcct>\n                <RmtInf>Paiement Logement Etudiant</RmtInf>\n            </DrctDbtTxInf>\n        </PmtInf>\n    </CstmrDrctDbtInitn>\n</Document>"
+				},
+				"url": {
+					"raw": "{{url_server}}/sepa26/delete/1",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"delete",
+						"1"
+					]
+				},
+				"description": "Supprime la transaction de la base et nettoie les fichiers/lots vides en cascade."
+			},
+			"response": []
+		},
+		{
+			"name": "Recherche (Bonus)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_server}}/sepa26/search?sum=50",
+					"host": [
+						"{{url_server}}"
+					],
+					"path": [
+						"sepa26",
+						"search"
+					],
+					"query": [
+						{
+							"key": "sum",
+							"value": "50"
+						}
+					]
+				},
+				"description": "Filtre les transactions pour n'afficher que celles dont le montant est supérieur ou égal au parametre sum et/ou date."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_server",
+			"value": ""
+		}
+	]
+}
