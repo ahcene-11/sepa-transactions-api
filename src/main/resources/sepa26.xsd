@@ -64,7 +64,22 @@
             <xs:element name="NbOfTxs" type="xs:string" minOccurs="0"/>
             <xs:element name="CtrlSum" type="Amount" minOccurs="0"/>
 
-            <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded" namespace="##any"/>
+            <xs:element name="PmtTpInf" minOccurs="0">
+                <xs:complexType><xs:sequence><xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+            </xs:element>
+            <xs:element name="ReqdColltnDt" type="xs:string" minOccurs="0"/>
+            <xs:element name="Cdtr" minOccurs="0">
+                <xs:complexType><xs:sequence><xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+            </xs:element>
+            <xs:element name="CdtrAcct" minOccurs="0">
+                <xs:complexType><xs:sequence><xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+            </xs:element>
+            <xs:element name="CdtrAgt" minOccurs="0">
+                <xs:complexType><xs:sequence><xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+            </xs:element>
+            <xs:element name="CdtrSchmeId" minOccurs="0">
+                <xs:complexType><xs:sequence><xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType>
+            </xs:element>
 
             <xs:element name="DrctDbtTxInf" type="DrctDbtTxInfType" maxOccurs="unbounded"/>
         </xs:sequence>

@@ -38,4 +38,5 @@ public class CustomerDirectDebitInitiation {
     public void addPmtInf(PaymentInformation pmtInf) {
         this.pmtInfList.add(pmtInf);
     }
+
 }

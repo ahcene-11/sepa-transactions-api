@@ -14,7 +14,8 @@ public class GroupHeader {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlTransient // Dit à JAXB : "Ignore ce champ quand tu lis le XML, c'est juste pour la BDD"
-    private Long id_db;
+    @Column(name = "pk_id")
+    private Long id;
 
     @XmlElement(name = "MsgId")
     private String msgId;
@@ -56,6 +57,9 @@ public class GroupHeader {
         this.initgPty = initgPty;
     }
     // getters
+    public Long getId() {
+        return id;
+    }
     public String getMsgId() { return msgId; }
     public String getCreDtTm() { return creDtTm; }
     public String getNbOfTxs() { return nbOfTxs; }

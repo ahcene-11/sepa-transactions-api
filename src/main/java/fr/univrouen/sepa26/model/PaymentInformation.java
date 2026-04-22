@@ -14,7 +14,8 @@ public class PaymentInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlTransient
-    private Long id_db;
+    @Column(name = "pk_id")
+    private Long id;
 
     @XmlElement(name = "PmtInfId")
     private String pmtInfId;
@@ -84,6 +85,9 @@ public class PaymentInformation {
     }
 
     //getter utile pour jackson car il ne lis pas les variables private
+    public Long getId() {
+        return id;
+    }
     public String getPmtInfId() {
         return pmtInfId;
     }

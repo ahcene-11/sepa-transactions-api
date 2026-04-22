@@ -1,17 +1,27 @@
 package fr.univrouen.sepa26.controllers;
 
+import fr.univrouen.sepa26.model.Document;
+import fr.univrouen.sepa26.model.GroupHeader;
+import fr.univrouen.sepa26.model.PaymentInformation;
+import fr.univrouen.sepa26.model.DirectDebitTransaction;
+// Importez votre GroupHeaderRepository
 import fr.univrouen.sepa26.repository.GroupHeaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import fr.univrouen.sepa26.model.*;
-import fr.univrouen.sepa26.repository.PaymentInformationRepository;
+import org.xml.sax.SAXException;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
+import javax.xml.XMLConstants;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.StringReader;
 import java.util.List;
 
@@ -19,48 +29,80 @@ import java.util.List;
 public class PostController {
 
 	@Autowired
-	private GroupHeaderRepository headerRepository;
+	private GroupHeaderRepository groupHeaderRepository;
 
-	// Remarque : On n'a même plus besoin d'injecter PaymentInformationRepository ici !
-
-	@PostMapping(value = "/testpost", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public String postTest(@RequestBody String flux) {
+	@PostMapping(value = "/sepa26/insert", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> insertTransaction(@RequestBody String xmlPayload) {
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(Document.class);
-			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			StringReader reader = new StringReader(flux);
-			Document doc = (Document) unmarshaller.unmarshal(reader);
+			// ==========================================
+			// ÉTAPE 1 : LE BOUCLIER XSD
+			// ==========================================
+			SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			Source schemaFile = new StreamSource(getClass().getResourceAsStream("/sepa26.xsd"));
+			Schema schema = factory.newSchema(schemaFile);
+			Validator validator = schema.newValidator();
 
-			// 1. On récupère le Header et la liste des lots depuis le XML
+			// Si le XML est invalide, ça plante ici et on saute au "catch (SAXException)" !
+			validator.validate(new StreamSource(new StringReader(xmlPayload)));
+
+			// ==========================================
+			// ÉTAPE 2 : LA LECTURE DU XML (JAXB)
+			// ==========================================
+			JAXBContext context = JAXBContext.newInstance(Document.class);
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+			Document doc = (Document) unmarshaller.unmarshal(new StringReader(xmlPayload));
+
+			// ==========================================
+			// ÉTAPE 3 : VÉRIFICATION DES DOUBLONS
+			// ==========================================
 			GroupHeader header = doc.getCustomerDirectDebitInitiation().getGrpHdr();
+			String msgId = header.getMsgId();
+
+			// On vérifie si ce fichier a déjà été inséré
+			if (groupHeaderRepository.existsByMsgId(msgId)) {
+				return ResponseEntity.ok(
+						"<Response><status>ERROR</status><detail>Fichier en doublon : Le MsgId '" + msgId + "' existe déjà en base.</detail></Response>"
+				);
+			}
+
+			// ==========================================
+			// ÉTAPE 4 : RE-LIER LES PARENTS ET ENFANTS
+			// ==========================================
 			List<PaymentInformation> lots = doc.getCustomerDirectDebitInitiation().getPmtInfList();
+			if (lots != null) {
+				for (PaymentInformation lot : lots) {
+					// On attache le Header au Lot
+					lot.setGroupHeader(header);
 
-			if (header != null && lots != null) {
-				// 2. On attache la liste des lots au Header
-				header.setPaymentInformationList(lots);
-
-				for (PaymentInformation paymentInfo : lots) {
-					// 3. On attache le Header à chaque lot (pour la clé étrangère)
-					paymentInfo.setGroupHeader(header);
-
-					// 4. On s'occupe des transactions (comme avant)
-					if (paymentInfo.getTransactions() != null) {
-						for (DirectDebitTransaction tx : paymentInfo.getTransactions()) {
-							tx.setPaymentInformation(paymentInfo);
+					if (lot.getTransactions() != null) {
+						for (DirectDebitTransaction tx : lot.getTransactions()) {
+							// On attache le Lot à la Transaction
+							tx.setPaymentInformation(lot);
 						}
 					}
 				}
-
-				// 5. LE SAUVETAGE EN CASCADE !
-				// En sauvegardant le Header, Spring sauvegarde les lots, qui sauvegardent les transactions !
-				headerRepository.save(header);
+				// On donne la liste complète des lots au Header
+				header.setPaymentInformationList(lots);
 			}
 
-			return "<result><response>Succès : XML sauvegardé !</response></result>";
+			// ==========================================
+			// ÉTAPE 5 : SAUVEGARDE EN CASCADE
+			// ==========================================
+			// Si votre GroupHeader a bien @OneToMany(cascade = CascadeType.ALL), ça va tout sauvegarder d'un coup !
+			groupHeaderRepository.save(header);
 
+			return ResponseEntity.ok("<Response><id>" + header.getId() + "</id><status>INSERTED</status></Response>");
+
+		} catch (SAXException e) {
+			// ERREUR XSD (Faux IBAN, balises dans le désordre, etc.)
+			return ResponseEntity.ok(
+					"<Response><status>ERROR</status><detail>Flux XML non valide par rapport au schéma : " + e.getMessage() + "</detail></Response>"
+			);
 		} catch (Exception e) {
-			e.printStackTrace();
-			return "<result><response>Erreur lors du traitement : " + e.getMessage() + "</response></result>";
+			// ERREUR GÉNÉRALE (Problème BDD, etc.)
+			return ResponseEntity.ok(
+					"<Response><status>ERROR</status><detail>Erreur interne du serveur : " + e.getMessage() + "</detail></Response>"
+			);
 		}
 	}
 }

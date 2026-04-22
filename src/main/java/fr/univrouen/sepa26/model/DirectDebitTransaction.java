@@ -15,7 +15,8 @@ public class DirectDebitTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlTransient
-    private Long id_db;
+    @Column(name = "pk_id")
+    private Long id;
 
     // 3. LA CLÉ ÉTRANGÈRE : Le lien de retour vers le lot parent
     @ManyToOne
@@ -56,8 +57,8 @@ public class DirectDebitTransaction {
         this.rmtInf = new ArrayList<>();
     }
 
-    public long getId_db(){
-        return id_db;
+    public long getId(){
+        return id;
     }
     public String getPmtId() {
         return pmtId;

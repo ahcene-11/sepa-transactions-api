@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupHeaderRepository extends JpaRepository<GroupHeader, Long> {
+    boolean existsByMsgId(String msgId);
 }

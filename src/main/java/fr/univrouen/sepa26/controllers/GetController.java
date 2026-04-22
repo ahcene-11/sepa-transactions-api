@@ -56,7 +56,7 @@ public class GetController {
 				}
 			}
 
-			listeSimplifiee.add(new TransactionSimple(tx.getId_db(), date, tx.getPmtId(), somme));
+			listeSimplifiee.add(new TransactionSimple(tx.getId(), date, tx.getPmtId(), somme));
 		}
 
 		return new ResumeTransactionDTO(listeSimplifiee);
@@ -97,11 +97,11 @@ public class GetController {
 			}
 
 			html.append("<tr>")
-					.append("<td>").append(tx.getId_db()).append("</td>")
+					.append("<td>").append(tx.getId()).append("</td>")
 					.append("<td>").append(date).append("</td>")
 					.append("<td>").append(tx.getPmtId()).append("</td>")
 					.append("<td>").append(somme).append("</td>")
-					.append("<td><a class='btn btn-primary' style='padding: 8px 15px; font-size: 13px;' href='/sepa26/html/").append(tx.getId_db()).append("'>Détails</a></td>")
+					.append("<td><a class='btn btn-primary' style='padding: 8px 15px; font-size: 13px;' href='/sepa26/html/").append(tx.getId()).append("'>Détails</a></td>")
 					.append("</tr>");
 		}
 
@@ -136,9 +136,9 @@ public class GetController {
 			if (tx.getPaymentInformation() != null && tx.getPaymentInformation().getGroupHeader() != null) {
 				sepa.setGrpHdr(tx.getPaymentInformation().getGroupHeader());
 			}else {
-				// FALLBACK : Si la transaction est orpheline, on crée un faux Header pour satisfaire le XSD
+				// si la transaction est orpheline, on crée un faux Header pour satisfaire le XSD
 				GroupHeader fauxHeader = new fr.univrouen.sepa26.model.GroupHeader();
-				fauxHeader.setMsgId("ORPHELIN-" + tx.getId_db());
+				fauxHeader.setMsgId("ORPHELIN-" + tx.getId());
 				fauxHeader.setCreDtTm("1970-01-01T00:00:00");
 				fauxHeader.setNbOfTxs("1");
 				fauxHeader.setCtrlSum("0.00");
@@ -158,7 +158,6 @@ public class GetController {
 			sepa.setPmtInf(java.util.Collections.singletonList(pmtInf));
 			wrapper.setCustomerDirectDebitInitiation(sepa);
 
-			// Succès : Le flux commencera bien par <Document xmlns="http://univ.fr/sepa26">
 			return ResponseEntity.ok(wrapper);
 		} else {
 			// Erreur : L'ID n'existe pas, on construit le XML d'erreur demandé
