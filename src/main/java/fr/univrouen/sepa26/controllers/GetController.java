@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -180,13 +181,7 @@ public class GetController {
 
 		if (!txOpt.isPresent()) {
 			// Erreur : L'ID n'existe pas, on renvoie du HTML simple
-			String errorHtml = "<html><body>" +
-					"<h2 style='color:red;'>Erreur</h2>" +
-					"<p><b>id :</b> " + id + "</p>" +
-					"<p><b>status :</b> ERROR</p>" +
-					"<br><a href='/sepa26/resume/html'>Retour à la liste</a>" +
-					"</body></html>";
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorHtml);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction introuvable");
 		}
 
 		try {

@@ -6,6 +6,8 @@ import fr.univrouen.sepa26.model.PaymentInformation;
 import fr.univrouen.sepa26.repository.DirectDebitTransactionRepository;
 import fr.univrouen.sepa26.repository.GroupHeaderRepository;
 import fr.univrouen.sepa26.repository.PaymentInformationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 public class DeleteController {
+    private static final Logger log = LoggerFactory.getLogger(PostController.class);
     @Autowired
     private DirectDebitTransactionRepository transactionRepository;
      @Autowired
@@ -66,7 +69,7 @@ public class DeleteController {
                     }
                 }
             }
-
+            log.info("Succès : Transaction supprimé avec succès.");
             // on renvoie l'ID supprimé et le status DELETED (Bonus : la description)
             return ResponseEntity.ok(
                     "<Response>\n" +
@@ -77,6 +80,7 @@ public class DeleteController {
 
         } catch (Exception e) {
             // En cas de problème de base de données
+            log.error("Échec de la suppression : " + e.getMessage());
             return ResponseEntity.ok("<Response><status>ERROR</status></Response>");
         }
     }

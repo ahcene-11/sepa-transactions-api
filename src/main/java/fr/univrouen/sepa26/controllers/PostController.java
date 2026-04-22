@@ -6,6 +6,8 @@ import fr.univrouen.sepa26.model.PaymentInformation;
 import fr.univrouen.sepa26.model.DirectDebitTransaction;
 // Importez votre GroupHeaderRepository
 import fr.univrouen.sepa26.repository.GroupHeaderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +29,14 @@ import java.util.List;
 
 @RestController
 public class PostController {
-
+	//logs
+	private static final Logger log = LoggerFactory.getLogger(PostController.class);
 	@Autowired
 	private GroupHeaderRepository groupHeaderRepository;
 
 	@PostMapping(value = "/sepa26/insert", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> insertTransaction(@RequestBody String xmlPayload) {
+		log.info("Réception d'une nouvelle requête d'insertion SEPA...");
 		try {
 			// etape 1 : validation xsd
 			SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -78,16 +82,18 @@ public class PostController {
 			}
 			// sauvegarde en cascade
 			groupHeaderRepository.save(header);
-
+			log.info("Succès : Transaction insérée avec succès.");
 			return ResponseEntity.ok("<Response><id>" + header.getId() + "</id><status>INSERTED</status></Response>");
 
 		} catch (SAXException e) {
 			// ERREUR XSD (Faux IBAN, balises dans le désordre, etc.)
+			log.error("Échec de l'insertion : " + e.getMessage());
 			return ResponseEntity.ok(
 					"<Response><status>ERROR</status><description>Flux XML non valide par rapport au schéma : " + e.getMessage() + "</description></Response>"
 			);
 		} catch (Exception e) {
 			// ERREUR GÉNÉRALE (Problème BDD, etc.)
+			log.error("Échec de l'insertion : " + e.getMessage());
 			return ResponseEntity.ok(
 					"<Response><status>ERROR</status><detail>Erreur interne du serveur : " + e.getMessage() + "</detail></Response>"
 			);
