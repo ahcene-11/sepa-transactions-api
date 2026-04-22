@@ -18,9 +18,8 @@ public class IndexController {
 		return "forward:/help.html";
 	}
 
-	@GetMapping("/simulate-error")
-	public String simulateError() {
-		// On force le programme à planter en déclenchant une exception non gérée
-		throw new RuntimeException("Ceci est un test d'erreur 500 volontaire !");
+	@GetMapping("/transfert")
+	public String getTransferPage() {
+		return "forward:/transfert.html";
 	}
 }

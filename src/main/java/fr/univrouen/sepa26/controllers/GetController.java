@@ -234,7 +234,6 @@ public class GetController {
 			// 1. Recherche en base avec nos paramètres (qui peuvent être null)
 			List<DirectDebitTransaction> transactions = transactionRepository.searchTransactions(date, sum);
 
-			// 2. Format de retour selon les consignes du prof
 			StringBuilder xmlBuilder = new StringBuilder();
 			xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 			xmlBuilder.append("<Transactions>\n");

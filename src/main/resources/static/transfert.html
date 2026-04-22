@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transférer un Fichier - SEPA26 | Plateforme de Gestion des Virements</title>
+    <link rel="stylesheet" href="/css/style.css?v=10">
+</head>
+<body class="transfer-page">
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="header-title">
+                    <img src="/images/sepa.png" alt="logo sepa">
+                </div>
+                <div class="header-subtitle">Plateforme de Gestion</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Transférer un Fichier <span class="highlight">SEPA</span></h1>
+            <p class="subtitle">Téléchargez et validez vos fichiers SEPA</p>
+
+            <div class="transfer-section">
+                <form id="transferForm" enctype="multipart/form-data" class="transfer-form">
+                    <div class="form-group">
+                        <label for="apiUrl" class="form-label">URL du service REST :</label>
+                        <input type="text" id="apiUrl" class="form-input" value="http://localhost:8100/sepa26/insert">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sepaFile" class="form-label">Sélectionnez votre fichier SEPA</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="sepaFile" name="sepaFile" accept=".xml" required class="file-input">
+                            <span class="file-input-label">Choisir un fichier XML</span>
+                        </div>
+                        <p class="file-help-text">Format accepté: XML | Taille maximale: 10 MB</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="/" class="btn btn-secondary btn-back">
+                            <span class="btn-icon" aria-hidden="true">❮</span>
+                            <span class="btn-label">Retour</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary">Transférer le Fichier</button>
+
+                    </div>
+                </form>
+
+                <div id="responseArea" class="response-area" style="display: none;"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Accueil</a>
+                <a href="/help">Aide</a>
+            </div>
+            <p>&copy; 2025-2026 SEPA26 - Tous droits réservés | Projet académique - Université de Rouen Normandie</p>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('transferForm');
+        const responseArea = document.getElementById('responseArea');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const url = document.getElementById('apiUrl').value;
+            const fileInput = document.getElementById('sepaFile');
+
+            if (!fileInput.files.length) {
+                alert('Veuillez sélectionner un fichier');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const xmlContent = e.target.result;
+
+                responseArea.style.display = 'block';
+                responseArea.innerText = "⏳ Envoi en cours...";
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/xml'
+                    },
+                    body: xmlContent
+                })
+                .then(response => response.text())
+                .then(data => {
+                    responseArea.innerText = "Réponse du serveur :\n\n" + data;
+                })
+                .catch(error => {
+                    responseArea.innerText = "Erreur de connexion au serveur :\n" + error;
+                });
+            };
+
+            reader.readAsText(file);
+        });
+
+        // Mise à jour du label du fichier sélectionné
+        document.getElementById('sepaFile').addEventListener('change', (e) => {
+            const fileName = e.target.files[0]?.name || 'Choisir un fichier XML';
+            document.querySelector('.file-input-label').textContent = fileName;
+        });
+    </script>
+</body>
+</html>
