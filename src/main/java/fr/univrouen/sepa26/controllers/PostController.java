@@ -34,27 +34,21 @@ public class PostController {
 	@PostMapping(value = "/sepa26/insert", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> insertTransaction(@RequestBody String xmlPayload) {
 		try {
-			// ==========================================
-			// ÉTAPE 1 : LE BOUCLIER XSD
-			// ==========================================
+			// etape 1 : validation xsd
 			SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Source schemaFile = new StreamSource(getClass().getResourceAsStream("/sepa26.xsd"));
 			Schema schema = factory.newSchema(schemaFile);
 			Validator validator = schema.newValidator();
 
-			// Si le XML est invalide, ça plante ici et on saute au "catch (SAXException)" !
+			// Si le XML est invalide, ça plante ici et on saute au "catch (SAXException)"
 			validator.validate(new StreamSource(new StringReader(xmlPayload)));
 
-			// ==========================================
 			// ÉTAPE 2 : LA LECTURE DU XML (JAXB)
-			// ==========================================
 			JAXBContext context = JAXBContext.newInstance(Document.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			Document doc = (Document) unmarshaller.unmarshal(new StringReader(xmlPayload));
 
-			// ==========================================
-			// ÉTAPE 3 : VÉRIFICATION DES DOUBLONS
-			// ==========================================
+			// etape 3 : verification des doublons
 			GroupHeader header = doc.getCustomerDirectDebitInitiation().getGrpHdr();
 			String msgId = header.getMsgId();
 
@@ -65,9 +59,7 @@ public class PostController {
 				);
 			}
 
-			// ==========================================
 			// ÉTAPE 4 : RE-LIER LES PARENTS ET ENFANTS
-			// ==========================================
 			List<PaymentInformation> lots = doc.getCustomerDirectDebitInitiation().getPmtInfList();
 			if (lots != null) {
 				for (PaymentInformation lot : lots) {
@@ -84,11 +76,7 @@ public class PostController {
 				// On donne la liste complète des lots au Header
 				header.setPaymentInformationList(lots);
 			}
-
-			// ==========================================
-			// ÉTAPE 5 : SAUVEGARDE EN CASCADE
-			// ==========================================
-			// Si votre GroupHeader a bien @OneToMany(cascade = CascadeType.ALL), ça va tout sauvegarder d'un coup !
+			// sauvegarde en cascade
 			groupHeaderRepository.save(header);
 
 			return ResponseEntity.ok("<Response><id>" + header.getId() + "</id><status>INSERTED</status></Response>");
@@ -96,7 +84,7 @@ public class PostController {
 		} catch (SAXException e) {
 			// ERREUR XSD (Faux IBAN, balises dans le désordre, etc.)
 			return ResponseEntity.ok(
-					"<Response><status>ERROR</status><detail>Flux XML non valide par rapport au schéma : " + e.getMessage() + "</detail></Response>"
+					"<Response><status>ERROR</status><description>Flux XML non valide par rapport au schéma : " + e.getMessage() + "</description></Response>"
 			);
 		} catch (Exception e) {
 			// ERREUR GÉNÉRALE (Problème BDD, etc.)

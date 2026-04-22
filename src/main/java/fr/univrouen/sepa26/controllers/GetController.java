@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.transform.Source;
@@ -221,6 +222,47 @@ public class GetController {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Erreur lors de la transformation XSLT : " + e.getMessage());
+		}
+	}
+
+	@GetMapping(value = "/sepa26/search", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> searchTransactions(
+			@RequestParam(value = "date", required = false) String date,
+			@RequestParam(value = "sum", required = false) Double sum) {
+
+		try {
+			// 1. Recherche en base avec nos paramètres (qui peuvent être null)
+			List<DirectDebitTransaction> transactions = transactionRepository.searchTransactions(date, sum);
+
+			// 2. Format de retour selon les consignes du prof
+			StringBuilder xmlBuilder = new StringBuilder();
+			xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+			xmlBuilder.append("<Transactions>\n");
+
+			if (transactions.isEmpty()) {
+				xmlBuilder.append("  <status>NONE</status>\n");
+			} else {
+				for (DirectDebitTransaction tx : transactions) {
+					xmlBuilder.append("  <Transaction>\n");
+					xmlBuilder.append("    <id>").append(tx.getId()).append("</id>\n");
+
+					String creDtTm = tx.getPaymentInformation() != null && tx.getPaymentInformation().getGroupHeader() != null
+							? tx.getPaymentInformation().getGroupHeader().getCreDtTm() : "NC";
+					xmlBuilder.append("    <CreDtTm>").append(creDtTm).append("</CreDtTm>\n");
+					xmlBuilder.append("    <PmtId>").append(tx.getPmtId()).append("</PmtId>\n");
+
+					String amount = tx.getInstdAmt() != null ? String.valueOf(tx.getInstdAmt().getValue()) : "0.0";
+					xmlBuilder.append("    <CtrlSum>").append(amount).append("</CtrlSum>\n");
+
+					xmlBuilder.append("  </Transaction>\n");
+				}
+			}
+			xmlBuilder.append("</Transactions>");
+
+			return ResponseEntity.ok(xmlBuilder.toString());
+
+		} catch (Exception e) {
+			return ResponseEntity.ok("<Response><status>ERROR</status><description>Erreur de recherche</description></Response>");
 		}
 	}
 }

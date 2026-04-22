@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Document xmlns="http://univ.fr/sepa">
+<Document xmlns="http://univ.fr/sepa26">
     <CstmrDrctDbtInitn>
         <GrpHdr>
             <MsgId>MSGID - 123456</MsgId>
